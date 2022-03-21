@@ -37,9 +37,9 @@ fun MainScreen(
             Button(
                 onClick = {
                     if (!viewModel.isRunning.value) {
-                        viewModel.startTimer()
+                        viewModel.timer.startTimer()
                     }else{
-                        viewModel.pauseTimer()
+                        viewModel.timer.pauseTimer()
                     }
                 }
 
@@ -54,7 +54,7 @@ fun MainScreen(
                 Spacer(modifier = Modifier.width(50.dp))
 
                 Button(
-                    onClick = { viewModel.resetTimer() }
+                    onClick = { viewModel.timer.resetTimer() }
 
                 ) {
                     Text(
