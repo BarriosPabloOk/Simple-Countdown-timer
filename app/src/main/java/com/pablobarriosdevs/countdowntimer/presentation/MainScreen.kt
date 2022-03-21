@@ -10,8 +10,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import java.text.SimpleDateFormat
-import java.util.*
 
 @Composable
 fun MainScreen(
@@ -25,19 +23,46 @@ fun MainScreen(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = viewModel.timerState.value.toString(),
+            text = viewModel.timerState.value.formatTime(),
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(50.dp))
-        Button(
-            onClick = {viewModel.start()  }
 
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
         ) {
-            Text(
-                text = "INICIAR")
+            Button(
+                onClick = {
+                    if (!viewModel.isRunning.value) {
+                        viewModel.startTimer()
+                    }else{
+                        viewModel.pauseTimer()
+                    }
+                }
 
+            ) {
+                Text(
+                    text = if (viewModel.isRunning.value) "PAUSAR" else "INICIAR"
+                )
+            }
 
+            if (!viewModel.finished.value) {
+
+                Spacer(modifier = Modifier.width(50.dp))
+
+                Button(
+                    onClick = { viewModel.resetTimer() }
+
+                ) {
+                    Text(
+                        text = "RESET"
+                    )
+
+                }
+            }
         }
     }
 
